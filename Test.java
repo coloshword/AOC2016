@@ -1,17 +1,7 @@
 public class Test {
     public static void main(String[] args) {
-        int x = 5;
-        switch(x) {
-            default:
-                System.out.println("default");
-            case 1:
-                System.out.println("Issa one");
-                break;
-            case 2:
-                System.out.println("Issa two");
-                break;
-            case 0:
-                System.out.println("Issa 0");
-        }
+        //R190 -- > 190
+        String s = "R190";
+        System.out.println(s.substring(1));
     }
 }
