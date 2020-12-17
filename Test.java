@@ -1,7 +1,7 @@
+import java.util.ArrayList;
 public class Test {
     public static void main(String[] args) {
-        //R190 -- > 190
-        String s = "R190";
-        System.out.println(s.substring(1));
+        int[][] list = new int[][]
+        System.out.println(arr);
     }
 }
