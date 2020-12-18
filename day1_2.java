@@ -2,56 +2,76 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-/*
-new strategy: Add all coordinates right next to each other, and check all odd
- */
 public class day1_2 {
     public static void main(String[] args) {
         try {
             File fh = new File("day1.txt");
             Scanner input = new Scanner(fh);
             String[] instructions = input.nextLine().split(", ");
-            ArrayList<Integer> ans = new ArrayList<Integer>();
-            int[] currentCoordinate = {0, 0};
+            int[] currentCoordinate = {0, 0}; // [N/S, E/W]
             int facing = 0;
-            boolean flag = false;
-            for(String i : instructions){
-                ans.add(currentCoordinate[0]);
-                ans.add(currentCoordinate[1]);
+            ArrayList<Integer> ans = new ArrayList<>();
+            ans.add(0);
+            ans.add(0);
+            for(String i : instructions) {
                 facing = direction(i.charAt(0), facing);
-                currentCoordinate = getNewLocation(currentCoordinate, i, facing);
-                for(int j = 0; j < ans.size(); j+=2) {
-                    if(currentCoordinate[0] == ans.get(j) && currentCoordinate[1] == ans.get(j + 1)) {
+                currentCoordinate = getNewLocations(ans, i, facing, currentCoordinate);
+                System.out.println(ans);
+            }
+            // checking
+            boolean flag = false;
+            for(int i = 0; i < ans.size(); i+=2) {
+                int x = ans.get(i);
+                int y = ans.get(i + 1);
+                for(int a = i + 2; a < ans.size(); a+=2) {
+                    if(x == ans.get(a) && y == ans.get(a + 1)) {
                         System.out.println("ans");
-                        System.out.println(Arrays.toString(currentCoordinate));
-                        System.out.println(Math.abs(currentCoordinate[0]) + Math.abs(currentCoordinate[1]));
+                        System.out.printf("(%d, %d)" ,ans.get(a), ans.get(a+1));
+                        System.out.println();
                         flag = true;
+                        break;
                     }
-                } // [0, 2, 0, 2] i = 0, i = 2
-                if(flag) {
-                    break;
                 }
+                if(flag)
+                    break;
             }
         }
         catch (Exception e) {
             System.out.println("Something went wrong");
         }
     }
-    public static int[] getNewLocation(int[] oldLocation, String instruct, int curPosition) {
-        switch(curPosition) {
+    public static int[] getNewLocations(ArrayList<Integer> m, String instructions, int face, int[] currentLoc) {
+        switch(face) {
             case 0:
-                oldLocation[0] = oldLocation[0] + Integer.parseInt(instruct.substring(1));
-                break;
+                for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
+                    currentLoc[0] = currentLoc[0] + 1;
+                    m.add(currentLoc[0]);
+                    m.add(currentLoc[1]);
+                    break;
+                }
             case 2:
-                oldLocation[0] = oldLocation[0] - Integer.parseInt(instruct.substring(1));
-                break;
-            case 1:
-                oldLocation[1] = oldLocation[1] + Integer.parseInt(instruct.substring(1));
-                break;
+                for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
+                    currentLoc[0] = currentLoc[0] - 1;
+                    m.add(currentLoc[0]);
+                    m.add(currentLoc[1]);
+                    break;
+                }
             case 3:
-                oldLocation[1] = oldLocation[1] - Integer.parseInt(instruct.substring(1));
+                for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
+                    currentLoc[1] = currentLoc[1] + 1;
+                    m.add(currentLoc[0]);
+                    m.add(currentLoc[1]);
+                    break;
+                }
+            case 4:
+                for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
+                    currentLoc[1] = currentLoc[1] - 1;
+                    m.add(currentLoc[0]);
+                    m.add(currentLoc[1]);
+                    break;
+                }
         }
-        return oldLocation;
+        return currentLoc;
     }
     public static int direction(char turn, int curPosition) {
         // gets the new direction it is facing
