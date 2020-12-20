@@ -9,10 +9,9 @@ public class Test {
         ans.add(a);
         ans.add(b);
         ans.add(c);
-        int[] removed = ans.remove(0);
-        System.out.println(Arrays.toString(ans));
-        ans.add(0, removed);
-        System.out.println((ans));
-
+        int[] removed = ans.remove(1);
+        if(ans.contains(removed)) {
+            System.out.println(true);
+        }
     }
 }

@@ -14,29 +14,35 @@ public class day1_2 {
             ArrayList<int[]> ans = new ArrayList<>();
             ans.add(placeHolder);
             for(String i : instructions) {
-                System.out.println("------------------");
                 facing = direction(i.charAt(0), facing);
                 currentCoordinate = getNewLocations(ans, i, facing, currentCoordinate);
             }
-            //checking for duplicates
-            System.out.println("***************************");
+            // search for duplicate
+            boolean flag = false;
             for(int i = 0; i < ans.size(); i++) {
-                System.out.println(Arrays.toString(ans.get(i)));
+                for(int a = i + 1; a < ans.size(); a++) {
+                    if(arrayIsEqual(ans.get(i), ans.get(a))) {
+                        System.out.println("Answer!");
+                        System.out.println(Math.abs(ans.get(i)[0]) + Math.abs(ans.get(i)[1]));
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag) {
+                    break;
+                }
             }
-//            for(int i = 0; i < ans.size(); i++) {
-//                int[] output = ans.remove(i);
-//                if(ans.contains(output)) {
-//                    System.out.println(Arrays.toString(output));
-//                    break;
-//                }
-//                else {
-//                    ans.add(i, output);
-//                }
-//            }
         }
         catch (Exception e) {
             System.out.println("Something went wrong");
         }
+    }
+    public static boolean arrayIsEqual(int[] a, int[] b) {
+        for(int i = 0; i < a.length; i++) {
+            if(a[i] != b[i])
+                return false;
+        }
+        return true;
     }
     public static int[] getNewLocations(ArrayList<int[]> m, String instructions, int face, int[] currentLoc) {
         switch(face) {
@@ -47,8 +53,6 @@ public class day1_2 {
                     add[1] = currentLoc[1];
                     currentLoc[0] += 1;
                     m.add(add);
-                    System.out.println(face);
-                    System.out.println(Arrays.toString(add));
                 }
                 break;
             case 1:
@@ -58,8 +62,6 @@ public class day1_2 {
                     add[0] = currentLoc[0];
                     m.add(add);
                     currentLoc[1] += 1;
-                    System.out.println(face);
-                    System.out.println(Arrays.toString(add));
                 }
                 break;
             case 2:
@@ -69,8 +71,6 @@ public class day1_2 {
                     add[1] = currentLoc[1];
                     currentLoc[0] -= 1;
                     m.add(add);
-                    System.out.println(face);
-                    System.out.println(Arrays.toString(add));
                 }
                 break;
             case 3:
@@ -80,8 +80,6 @@ public class day1_2 {
                     add[0] = currentLoc[0];
                     m.add(add);
                     currentLoc[1] -= 1;
-                    System.out.println(face);
-                    System.out.println(Arrays.toString(add));
                 }
                 break;
         }
