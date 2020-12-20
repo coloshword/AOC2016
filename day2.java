@@ -1,17 +1,18 @@
 // create a 2d-array, where the elements correspond to the num pad. If index is out of bounds, ignore
 import java.util.Scanner;
 import java.io.File;
+import java.util.Arrays;
 public class day2 {
     public static void main(String[] args) {
         try {
             int[][] numPad = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-            int[] starting = {1, 1};
+            int[] keyLocation = {1, 1};
             String ans = "";
             File fh = new File("day2.txt");
             Scanner input = new Scanner(fh);
             while (input.hasNextLine()) {
                 String instructions = input.nextLine();
-                int[] keyLocation = readInstructions(instructions, starting);
+                keyLocation = readInstructions(instructions, keyLocation);
                 ans += numPad[keyLocation[0]][keyLocation[1]];
             }
             System.out.println(ans);
@@ -35,9 +36,11 @@ public class day2 {
                 case 'R':
                     if(start[1] < 2)
                         start[1] += 1;
+                    break;
                 case 'L':
                     if(start[1] > 0)
                         start[1] -= 1;
+                    break;
             }
         }
         return start;
