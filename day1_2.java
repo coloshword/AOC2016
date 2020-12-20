@@ -8,68 +8,82 @@ public class day1_2 {
             File fh = new File("day1.txt");
             Scanner input = new Scanner(fh);
             String[] instructions = input.nextLine().split(", ");
-            int[] currentCoordinate = {0, 0}; // [N/S, E/W]
+            int[] currentCoordinate = {0, 0};
+            int[] placeHolder = {0, 0};
             int facing = 0;
-            ArrayList<Integer> ans = new ArrayList<>();
-            ans.add(0);
-            ans.add(0);
+            ArrayList<int[]> ans = new ArrayList<>();
+            ans.add(placeHolder);
             for(String i : instructions) {
+                System.out.println("------------------");
                 facing = direction(i.charAt(0), facing);
                 currentCoordinate = getNewLocations(ans, i, facing, currentCoordinate);
-                System.out.println(ans);
             }
-            // checking
-            boolean flag = false;
-            for(int i = 0; i < ans.size(); i+=2) {
-                int x = ans.get(i);
-                int y = ans.get(i + 1);
-                for(int a = i + 2; a < ans.size(); a+=2) {
-                    if(x == ans.get(a) && y == ans.get(a + 1)) {
-                        System.out.println("ans");
-                        System.out.printf("(%d, %d)" ,ans.get(a), ans.get(a+1));
-                        System.out.println();
-                        flag = true;
-                        break;
-                    }
-                }
-                if(flag)
-                    break;
+            //checking for duplicates
+            System.out.println("***************************");
+            for(int i = 0; i < ans.size(); i++) {
+                System.out.println(Arrays.toString(ans.get(i)));
             }
+//            for(int i = 0; i < ans.size(); i++) {
+//                int[] output = ans.remove(i);
+//                if(ans.contains(output)) {
+//                    System.out.println(Arrays.toString(output));
+//                    break;
+//                }
+//                else {
+//                    ans.add(i, output);
+//                }
+//            }
         }
         catch (Exception e) {
             System.out.println("Something went wrong");
         }
     }
-    public static int[] getNewLocations(ArrayList<Integer> m, String instructions, int face, int[] currentLoc) {
+    public static int[] getNewLocations(ArrayList<int[]> m, String instructions, int face, int[] currentLoc) {
         switch(face) {
             case 0:
                 for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
-                    currentLoc[0] = currentLoc[0] + 1;
-                    m.add(currentLoc[0]);
-                    m.add(currentLoc[1]);
-                    break;
+                    int[] add = new int[2];
+                    add[0] = currentLoc[0] + 1;
+                    add[1] = currentLoc[1];
+                    currentLoc[0] += 1;
+                    m.add(add);
+                    System.out.println(face);
+                    System.out.println(Arrays.toString(add));
                 }
+                break;
+            case 1:
+                for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
+                    int[] add = new int[2];
+                    add[1] = currentLoc[1] + 1;
+                    add[0] = currentLoc[0];
+                    m.add(add);
+                    currentLoc[1] += 1;
+                    System.out.println(face);
+                    System.out.println(Arrays.toString(add));
+                }
+                break;
             case 2:
                 for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
-                    currentLoc[0] = currentLoc[0] - 1;
-                    m.add(currentLoc[0]);
-                    m.add(currentLoc[1]);
-                    break;
+                    int[] add = new int[2];
+                    add[0] = currentLoc[0] - 1;
+                    add[1] = currentLoc[1];
+                    currentLoc[0] -= 1;
+                    m.add(add);
+                    System.out.println(face);
+                    System.out.println(Arrays.toString(add));
                 }
+                break;
             case 3:
                 for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
-                    currentLoc[1] = currentLoc[1] + 1;
-                    m.add(currentLoc[0]);
-                    m.add(currentLoc[1]);
-                    break;
+                    int[] add = new int[2];
+                    add[1] = currentLoc[1] - 1;
+                    add[0] = currentLoc[0];
+                    m.add(add);
+                    currentLoc[1] -= 1;
+                    System.out.println(face);
+                    System.out.println(Arrays.toString(add));
                 }
-            case 4:
-                for(int i = 0; i < Integer.parseInt(instructions.substring(1)); i++) {
-                    currentLoc[1] = currentLoc[1] - 1;
-                    m.add(currentLoc[0]);
-                    m.add(currentLoc[1]);
-                    break;
-                }
+                break;
         }
         return currentLoc;
     }
