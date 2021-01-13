@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class day2_2 {
     public static void main(String[] args) {
         try {
-            File fh = new File("day2.txt");
-            Scanner input = new Scanner(fh);
+            Scanner input = new Scanner(new File("day2.txt"));
             char[][] keypad = {{'0','0','1','0','0'}, {'0','2','3','4','0'}, {'5', '6', '7', '8', '9'}, {'0','A', 'B', 'C', '0'}, {'0', '0', 'D', '0', '0'}};
             int[] keyLocation = {2, 0};
             String ans = "";
