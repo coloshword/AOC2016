@@ -32,7 +32,7 @@ public class day7 {
         boolean con2 = true;
         for(int i = 0; i < canABBA.size(); i++) {
             if(isABBA(canABBA.get(i))) {
-                return true;
+                con1 = true;
             }
         }
         for(int i = 0; i < notABBA.size(); i++) {
@@ -40,10 +40,7 @@ public class day7 {
                 con2 = false;
             }
         }
-        if(con1 && con2) {
-            return true;
-        }
-        return false;
+        return con1 && con2;
     }
 
     public static boolean isABBA(String input) {
