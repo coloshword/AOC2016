@@ -20,6 +20,7 @@ public class day8 {
                 }
             }
         }
+        display2(grid);
         System.out.println(ans);
     }
     
@@ -95,5 +96,22 @@ public class day8 {
             System.out.print("|\n");
         }
         System.out.println("--------------------------");
+    }
+
+    public static void display2(int[][] grid) {
+        for(int i = 0; i < 10; i++) {
+            for(int row = 0; row < 6; row++) {
+                for(int column = 5 * i; column < 5 * i + 5; column++) {
+                    if(grid[row][column] == 1) {
+                        System.out.print("*");
+                    }
+                    else {
+                        System.out.print(" ");
+                    }
+                }
+                System.out.println();
+            }
+            System.out.println("-----------------");
+        }
     }
 }
